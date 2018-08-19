@@ -2,11 +2,14 @@ package com.vivek.spark.sparkSQL;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.function.PairFunction;
 import org.apache.spark.sql.DataFrameReader;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.types.DataTypes;
+import scala.Tuple2;
 
 import static org.apache.spark.sql.functions.*;
 
@@ -25,6 +28,7 @@ public class HousePriceSolution {
 
         DataFrameReader reader = session.read();
         Dataset<Row> dataset = reader.option("header", "true").csv("data/RealEstate.csv");
+
 
         Dataset<Row> rowDataset = dataset.withColumn(PRICE, col(PRICE).cast(DataTypes.LongType))
                 .withColumn(PRICE_SQ_FEET, col(PRICE_SQ_FEET).cast(DataTypes.LongType));
